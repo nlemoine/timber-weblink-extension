@@ -2,19 +2,19 @@
 
 namespace HelloNico\Twig;
 
-use Fig\Link\GenericLinkProvider;
-use Fig\Link\Link;
 use Psr\Link\LinkProviderInterface;
+use Symfony\Component\WebLink\GenericLinkProvider;
+use Symfony\Component\WebLink\HttpHeaderSerializer;
+use Symfony\Component\WebLink\Link;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Symfony\Component\WebLink\HttpHeaderSerializer;
 
 class WebLinkExtension extends AbstractExtension
 {
-    private $linkProvider = null;
+    private $linkProvider;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -22,7 +22,7 @@ class WebLinkExtension extends AbstractExtension
     }
 
     /**
-     * Send headers
+     * Send headers.
      */
     public function send_headers()
     {

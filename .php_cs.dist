@@ -2,7 +2,11 @@
 
 return PhpCsFixer\Config::create()
     ->setRules([
-        'array_syntax' => ['syntax' => 'short'],
+        '@PSR2' => true,
+        '@PhpCsFixer' => true,
+        'binary_operator_spaces' => [
+            'align_double_arrow' => true,
+        ]
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')

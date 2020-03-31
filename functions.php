@@ -7,6 +7,7 @@ use HelloNico\Twig\WebLinkExtension;
 function add_weblink_extension($twig)
 {
     $twig->addExtension(new WebLinkExtension());
+
     return $twig;
 }
 
