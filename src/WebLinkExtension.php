@@ -11,7 +11,7 @@ use Twig\TwigFunction;
 
 class WebLinkExtension extends AbstractExtension
 {
-    private $linkProvider;
+    private ?LinkProviderInterface $linkProvider = null;
 
     /**
      * Constructor.

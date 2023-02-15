@@ -1,9 +1,8 @@
 {
   "name": "hellonico/timber-weblink-extension",
-  "type": "library",
   "description": "Timber WebLink Twig extension.",
-  "homepage": "https://github.com/nlemoine/twig-dump-extension",
   "license": "GPL-3.0+",
+  "type": "library",
   "authors": [
     {
       "name": "Nicolas Lemoine",
@@ -11,9 +10,11 @@
       "homepage": "https://github.com/nlemoine"
     }
   ],
+  "homepage": "https://github.com/nlemoine/twig-dump-extension",
   "require": {
-    "php": "^5.5.9 || >=7.0.8",
-    "symfony/web-link": "^5.0"
+    "php": "^7.4 || ^8.0",
+    "psr/link": "^1.1 || ^2.0",
+    "symfony/web-link": "^5.4 || ^6.0"
   },
   "autoload": {
     "psr-4": {
