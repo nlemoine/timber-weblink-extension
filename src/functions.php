@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace n5s\TimberWebLink;
 
+use n5s\WpHookKit\Hook;
 use Symfony\Component\WebLink\HttpHeaderSerializer;
 use Twig\Environment;
 
@@ -50,9 +51,8 @@ function send_headers(): void
 }
 
 // Named functions rather than closures, so they can be removed with remove_filter() and remove_action().
-if (\function_exists('add_filter')) {
-    \add_filter('timber/twig', __NAMESPACE__ . '\\add_weblink_extension');
+// Hook::addFilter() also works when Composer's autoloader is loaded before WordPress, as in Bedrock.
+Hook::addFilter('timber/twig', __NAMESPACE__ . '\\add_weblink_extension');
 
-    // Timber::render() prints the page once it is compiled: when the template calls wp_footer, headers can still be sent.
-    \add_action('wp_footer', __NAMESPACE__ . '\\send_headers', \PHP_INT_MAX);
-}
+// Timber::render() prints the page once it is compiled: when the template calls wp_footer, headers can still be sent.
+Hook::addAction('wp_footer', __NAMESPACE__ . '\\send_headers', \PHP_INT_MAX);

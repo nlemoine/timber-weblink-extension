@@ -28,6 +28,7 @@
     },
     "require": {
         "php": "^8.2",
+        "n5s/wp-hook-kit": "^1.0",
         "psr/link": "^1.1 || ^2.0",
         "symfony/web-link": "^6.4 || ^7.4 || ^8.0",
         "timber/timber": "^2.0",
