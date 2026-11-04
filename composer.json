@@ -34,6 +34,18 @@
         "timber/timber": "^2.0",
         "twig/twig": "^3.0"
     },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.54",
+        "mantle-framework/testkit": "^1.18",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.6",
+        "slevomat/coding-standard": "^8.22",
+        "syde/phpcs": "^1.0",
+        "szepeviktor/phpstan-wordpress": "^2.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "n5s\\TimberWebLink\\": "src/"
@@ -41,5 +53,32 @@
         "files": [
             "src/functions.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "n5s\\TimberWebLink\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "alleyinteractive/composer-wordpress-autoloader": true,
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true,
+            "roots/wordpress-core-installer": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "scripts": {
+        "cs": "phpcs",
+        "cs:fix": "phpcbf",
+        "phpstan": "@php -d memory_limit=-1 vendor/bin/phpstan analyse",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process",
+        "test": "phpunit",
+        "test:coverage": "php -d pcov.enabled=1 vendor/bin/phpunit --coverage-text"
     }
 }
