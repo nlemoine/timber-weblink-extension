@@ -11,6 +11,7 @@ Resources declared in your templates with `preload()`, `preconnect()` and the ot
 ### Requirements
 
 - PHP 8.2+
+- WordPress 6.9+
 - Timber 2.0+
 
 ### Installation
@@ -46,14 +47,14 @@ Each function returns the URI unchanged, so you can call it where the URI is pri
 
 ### When the header is sent
 
-The links of every template rendered during the request are sent in one `Link` header on the `wp_footer` action. Headers can only be sent before the page is printed. This works when your base template calls `{{ function('wp_footer') }}` and is rendered with `Timber::render()`, which prints the page once it is compiled.
+The links of every template rendered while WordPress builds the page are sent in one `Link` header, once the page output is complete. This relies on the template enhancement output buffer added in WordPress 6.9: WordPress holds the output of the theme template until it ends, then fires the `wp_finalized_template_enhancement_output_buffer` action, while headers can still be sent.
 
-Links added after `wp_footer` runs are not sent, and neither is the header once the page output has started, for example when a PHP template calls `wp_footer()` after Timber has printed some markup.
+On older WordPress versions, no header is sent. The buffer only covers front-end templates loaded by WordPress, not admin pages, REST or Ajax requests, and it is not started if your site turns it off with the `wp_should_output_buffer_template_for_enhancement` filter.
 
 To send the header at another time, remove the action and call the function yourself:
 
 ```php
-remove_action('wp_footer', 'n5s\TimberWebLink\send_headers', PHP_INT_MAX);
+remove_action('wp_finalized_template_enhancement_output_buffer', 'n5s\TimberWebLink\send_headers');
 
 \n5s\TimberWebLink\send_headers();
 ```

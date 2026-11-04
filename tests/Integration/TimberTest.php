@@ -15,7 +15,16 @@ final class TimberTest extends TestCase
     public function testHooksAreRegisteredBeforeWordPressLoads(): void
     {
         $this->assertSame(10, \has_filter('timber/twig', 'n5s\TimberWebLink\add_weblink_extension'));
-        $this->assertSame(\PHP_INT_MAX, \has_action('wp_footer', 'n5s\TimberWebLink\send_headers'));
+        $this->assertSame(10, \has_action('wp_finalized_template_enhancement_output_buffer', 'n5s\TimberWebLink\send_headers'));
+        $this->assertFalse(\has_action('wp_footer', 'n5s\TimberWebLink\send_headers'));
+    }
+
+    public function testTheTemplateOutputBufferIsStarted(): void
+    {
+        // Since WordPress 6.9, classic themes start it anyway: leave only the action added by this library.
+        \remove_filter('wp_should_output_buffer_template_for_enhancement', '__return_true', 0);
+
+        $this->assertTrue(\wp_should_output_buffer_template_for_enhancement());
     }
 
     public function testTemplatesShareTheLinks(): void

@@ -54,5 +54,6 @@ function send_headers(): void
 // Hook::addFilter() also works when Composer's autoloader is loaded before WordPress, as in Bedrock.
 Hook::addFilter('timber/twig', __NAMESPACE__ . '\\add_weblink_extension');
 
-// Timber::render() prints the page once it is compiled: when the template calls wp_footer, headers can still be sent.
-Hook::addAction('wp_footer', __NAMESPACE__ . '\\send_headers', \PHP_INT_MAX);
+// WordPress 6.9+. Fires once the template output is complete, before it is sent, so links added anywhere in the page
+// are included. WordPress only starts the output buffer if this action has a callback when the template is included.
+Hook::addAction('wp_finalized_template_enhancement_output_buffer', __NAMESPACE__ . '\\send_headers');

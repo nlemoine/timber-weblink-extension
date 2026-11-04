@@ -2,9 +2,9 @@
 
 The Twig functions and their arguments are unchanged: templates need no change.
 
-## PHP 8.2 and Timber 2
+## PHP 8.2, WordPress 6.9 and Timber 2
 
-2.0 requires PHP 8.2, Timber 2 and Twig 3. Sites on older versions can stay on 1.x.
+2.0 requires PHP 8.2, WordPress 6.9, Timber 2 and Twig 3. Sites on older versions can stay on 1.x. On older WordPress versions, 2.0 sends no header.
 
 ## Composer package
 
@@ -28,8 +28,12 @@ The extension is added on the `timber/twig` filter instead of `timber/loader/twi
 
 ```php
 remove_filter('timber/twig', 'n5s\TimberWebLink\add_weblink_extension');
-remove_action('wp_footer', 'n5s\TimberWebLink\send_headers', PHP_INT_MAX);
+remove_action('wp_finalized_template_enhancement_output_buffer', 'n5s\TimberWebLink\send_headers');
 ```
+
+## When the header is sent
+
+1.x sent the header on `wp_footer`, which only worked when the template called `wp_footer` before any output was printed. 2.0 sends it on `wp_finalized_template_enhancement_output_buffer`, once the page output is complete, so links added after `wp_footer` are sent too.
 
 ## One Link header per request
 
@@ -37,7 +41,7 @@ Timber creates a Twig environment for each compiled template. 1.x added a new ex
 
 ## Using the extension outside Timber
 
-`new WebLinkExtension()` no longer hooks into `wp_footer`, so its links are never sent. To add the functions to your own Twig environment, add the shared extension instead:
+`new WebLinkExtension()` no longer hooks into WordPress, so its links are never sent. To add the functions to your own Twig environment, add the shared extension instead:
 
 ```php
 $twig->addExtension(\n5s\TimberWebLink\get_extension());
