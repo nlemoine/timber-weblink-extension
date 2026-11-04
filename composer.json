@@ -1,16 +1,21 @@
 {
     "name": "n5s/timber-weblink-extension",
-    "description": "Symfony WebLink Twig functions for Timber: send preload, prefetch and other resource hints as Link HTTP headers.",
+    "description": "Symfony WebLink for Timber: preload(), preconnect() and other Twig functions that send resource hints in a Link HTTP header.",
     "license": "GPL-3.0-or-later",
     "type": "library",
     "keywords": [
         "timber",
         "twig",
+        "twig-extension",
+        "wordpress",
+        "symfony",
         "weblink",
         "preload",
+        "prefetch",
+        "preconnect",
         "resource-hints",
         "link-header",
-        "wordpress"
+        "web-performance"
     ],
     "authors": [
         {
