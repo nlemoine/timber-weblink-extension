@@ -4,45 +4,25 @@ declare(strict_types=1);
 
 namespace n5s\TimberWebLink;
 
+use Psr\Link\LinkInterface;
+use Psr\Link\LinkProviderInterface;
 use Symfony\Component\WebLink\GenericLinkProvider;
-use Symfony\Component\WebLink\HttpHeaderSerializer;
 use Symfony\Component\WebLink\Link;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Twig functions that collect links, sent as a Link HTTP header on wp_footer.
+ * Twig functions that collect links, sent as a Link HTTP header by send_headers().
  *
  * @phpstan-type Attributes array<string, scalar|\Stringable|list<scalar|\Stringable>>
  */
-final class WebLinkExtension extends AbstractExtension
+final class WebLinkExtension extends AbstractExtension implements LinkProviderInterface
 {
     private GenericLinkProvider $linkProvider;
 
     public function __construct()
     {
         $this->linkProvider = new GenericLinkProvider();
-
-        \add_action('wp_footer', [$this, 'send_headers'], \PHP_INT_MAX);
-    }
-
-    /**
-     * Sends the collected links as a Link HTTP header.
-     */
-    public function send_headers(): void
-    {
-        if (\headers_sent()) {
-            return;
-        }
-
-        // Symfony documents the parameter as LinkInterface[]|\Traversable, which PHPStan narrows to Traversable.
-        // @phpstan-ignore argument.type
-        $header = (new HttpHeaderSerializer())->serialize($this->linkProvider->getLinks());
-        if ($header === null) {
-            return;
-        }
-
-        \header('Link: ' . $header, false);
     }
 
     /**
@@ -138,5 +118,21 @@ final class WebLinkExtension extends AbstractExtension
     public function prerender(string $uri, array $attributes = []): string
     {
         return $this->link($uri, 'prerender', $attributes);
+    }
+
+    /**
+     * @return array<LinkInterface>
+     */
+    public function getLinks(): array
+    {
+        return $this->linkProvider->getLinks();
+    }
+
+    /**
+     * @return array<LinkInterface>
+     */
+    public function getLinksByRel(string $rel): array
+    {
+        return $this->linkProvider->getLinksByRel($rel);
     }
 }
