@@ -1,27 +1,44 @@
 {
-  "name": "hellonico/timber-weblink-extension",
-  "description": "Timber WebLink Twig extension.",
-  "license": "GPL-3.0+",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Nicolas Lemoine",
-      "email": "dev@helloni.co",
-      "homepage": "https://github.com/nlemoine"
-    }
-  ],
-  "homepage": "https://github.com/nlemoine/twig-dump-extension",
-  "require": {
-    "php": "^7.4 || ^8.0",
-    "psr/link": "^1.1 || ^2.0",
-    "symfony/web-link": "^5.4 || ^6.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "HelloNico\\Twig\\": "src/"
+    "name": "hellonico/timber-weblink-extension",
+    "description": "Symfony WebLink Twig functions for Timber: send preload, prefetch and other resource hints as Link HTTP headers.",
+    "license": "GPL-3.0-or-later",
+    "type": "library",
+    "keywords": [
+        "timber",
+        "twig",
+        "weblink",
+        "preload",
+        "resource-hints",
+        "link-header",
+        "wordpress"
+    ],
+    "authors": [
+        {
+            "name": "Nicolas Lemoine",
+            "email": "nico@n5s.dev",
+            "homepage": "https://n5s.dev/"
+        }
+    ],
+    "homepage": "https://github.com/nlemoine/timber-weblink-extension",
+    "support": {
+        "issues": "https://github.com/nlemoine/timber-weblink-extension/issues",
+        "source": "https://github.com/nlemoine/timber-weblink-extension.git",
+        "security": "https://github.com/nlemoine/timber-weblink-extension/security/policy",
+        "changelog": "https://github.com/nlemoine/timber-weblink-extension/releases"
     },
-    "files": [
-      "functions.php"
-    ]
-  }
+    "require": {
+        "php": "^8.2",
+        "psr/link": "^1.1 || ^2.0",
+        "symfony/web-link": "^6.4 || ^7.4 || ^8.0",
+        "timber/timber": "^2.0",
+        "twig/twig": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "n5s\\TimberWebLink\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    }
 }
