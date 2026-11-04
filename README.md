@@ -1,7 +1,7 @@
 # Timber WebLink Extension
 
-[![Latest Version](https://img.shields.io/packagist/v/hellonico/timber-weblink-extension.svg?style=flat-square)](https://github.com/nlemoine/timber-weblink-extension/releases)
-[![Packagist](https://img.shields.io/packagist/dt/hellonico/timber-weblink-extension.svg?style=flat-square)](https://packagist.org/packages/hellonico/timber-weblink-extension)
+[![Latest Version](https://img.shields.io/packagist/v/n5s/timber-weblink-extension.svg?style=flat-square)](https://github.com/nlemoine/timber-weblink-extension/releases)
+[![Packagist](https://img.shields.io/packagist/dt/n5s/timber-weblink-extension.svg?style=flat-square)](https://packagist.org/packages/n5s/timber-weblink-extension)
 [![Coverage](https://img.shields.io/codecov/c/github/nlemoine/timber-weblink-extension?style=flat-square)](https://codecov.io/gh/nlemoine/timber-weblink-extension)
 
 Brings the [Symfony WebLink](https://symfony.com/doc/current/web_link.html) Twig functions to [Timber](https://timber.github.io/docs/v2/).
@@ -16,7 +16,7 @@ Resources declared in your templates with `preload()`, `preconnect()` and the ot
 ### Installation
 
 ```bash
-composer require hellonico/timber-weblink-extension
+composer require n5s/timber-weblink-extension
 ```
 
 The extension adds itself to Timber's Twig environment on the `timber/twig` filter: there is nothing to set up. It also works when Composer's autoloader is loaded before WordPress, as in [Bedrock](https://roots.io/bedrock/).

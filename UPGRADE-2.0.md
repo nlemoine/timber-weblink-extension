@@ -6,6 +6,10 @@ The Twig functions and their arguments are unchanged: templates need no change.
 
 2.0 requires PHP 8.2, Timber 2 and Twig 3. Sites on older versions can stay on 1.x.
 
+## Composer package
+
+The Composer package was renamed from `hellonico/timber-weblink-extension` to `n5s/timber-weblink-extension`: run `composer remove hellonico/timber-weblink-extension`, then `composer require n5s/timber-weblink-extension:^2.0`.
+
 ## Namespace
 
 Classes and functions moved from `HelloNico\Twig` and `HelloNico\Timber` to `n5s\TimberWebLink`. The old names are not kept as aliases.

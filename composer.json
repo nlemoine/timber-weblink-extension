@@ -1,5 +1,5 @@
 {
-    "name": "hellonico/timber-weblink-extension",
+    "name": "n5s/timber-weblink-extension",
     "description": "Symfony WebLink Twig functions for Timber: send preload, prefetch and other resource hints as Link HTTP headers.",
     "license": "GPL-3.0-or-later",
     "type": "library",
