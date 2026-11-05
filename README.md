@@ -43,7 +43,7 @@ Link: <https://example.com/wp-content/themes/my-theme/css/app.css>; rel="preload
 | `prerender(uri, attributes)` | `prerender` |
 | `link(uri, rel, attributes)` | any relation |
 
-Each function returns the URI unchanged, so you can call it where the URI is printed. Attributes are optional: `{as: 'font', type: 'font/woff2', crossorigin: true}` adds `as="font"; type="font/woff2"; crossorigin` to the link.
+Each function returns the URI unchanged, so you can call it where the URI is printed. Attributes are optional: `{as: 'font', type: 'font/woff2', crossorigin: true}` adds `as="font"; type="font/woff2"; crossorigin` to the link. A link added again with the same relation and attributes, for example from a template rendered in a loop, is sent once.
 
 ### When the header is sent
 
