@@ -1,27 +1,90 @@
 {
-  "name": "hellonico/timber-weblink-extension",
-  "description": "Timber WebLink Twig extension.",
-  "license": "GPL-3.0+",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Nicolas Lemoine",
-      "email": "dev@helloni.co",
-      "homepage": "https://github.com/nlemoine"
-    }
-  ],
-  "homepage": "https://github.com/nlemoine/twig-dump-extension",
-  "require": {
-    "php": "^7.4 || ^8.0",
-    "psr/link": "^1.1 || ^2.0",
-    "symfony/web-link": "^5.4 || ^6.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "HelloNico\\Twig\\": "src/"
+    "name": "n5s/timber-weblink-extension",
+    "description": "Symfony WebLink for Timber: preload(), preconnect() and other Twig functions that send resource hints in a Link HTTP header.",
+    "license": "GPL-3.0-or-later",
+    "type": "library",
+    "keywords": [
+        "timber",
+        "twig",
+        "twig-extension",
+        "wordpress",
+        "symfony",
+        "weblink",
+        "preload",
+        "prefetch",
+        "preconnect",
+        "resource-hints",
+        "link-header",
+        "web-performance"
+    ],
+    "authors": [
+        {
+            "name": "Nicolas Lemoine",
+            "email": "nico@n5s.dev",
+            "homepage": "https://n5s.dev/"
+        }
+    ],
+    "homepage": "https://github.com/nlemoine/timber-weblink-extension",
+    "support": {
+        "issues": "https://github.com/nlemoine/timber-weblink-extension/issues",
+        "source": "https://github.com/nlemoine/timber-weblink-extension.git",
+        "security": "https://github.com/nlemoine/timber-weblink-extension/security/policy",
+        "changelog": "https://github.com/nlemoine/timber-weblink-extension/releases"
     },
-    "files": [
-      "functions.php"
-    ]
-  }
+    "require": {
+        "php": "^8.2",
+        "n5s/wp-hook-kit": "^1.0",
+        "psr/link": "^1.1 || ^2.0",
+        "symfony/web-link": "^6.4 || ^7.4 || ^8.0",
+        "timber/timber": "^2.0",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.54",
+        "mantle-framework/testkit": "^1.18",
+        "n5s/http-cli": "^1.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.6",
+        "slevomat/coding-standard": "^8.22",
+        "syde/phpcs": "^1.0",
+        "szepeviktor/phpstan-wordpress": "^2.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "n5s\\TimberWebLink\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "n5s\\TimberWebLink\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "alleyinteractive/composer-wordpress-autoloader": true,
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true,
+            "roots/wordpress-core-installer": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "scripts": {
+        "cs": "phpcs",
+        "cs:fix": "phpcbf",
+        "phpstan": "@php -d memory_limit=-1 vendor/bin/phpstan analyse",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process",
+        "test": "phpunit",
+        "test:coverage": "php -d pcov.enabled=1 vendor/bin/phpunit --coverage-text"
+    }
 }
