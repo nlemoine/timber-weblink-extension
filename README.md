@@ -45,6 +45,14 @@ Link: <https://example.com/wp-content/themes/my-theme/css/app.css>; rel="preload
 
 Each function returns the URI unchanged, so you can call it where the URI is printed. Attributes are optional: `{as: 'font', type: 'font/woff2', crossorigin: true}` adds `as="font"; type="font/woff2"; crossorigin` to the link. A link added again with the same relation and attributes, for example from a template rendered in a loop, is sent once.
 
+An empty or `null` URI throws an error. Many WordPress functions return `false` when they find nothing, and Twig passes it as an empty string, so check the value first:
+
+```twig
+{% if post.thumbnail %}
+  <link rel="preload" href="{{ preload(post.thumbnail.src, {as: 'image'}) }}">
+{% endif %}
+```
+
 ### When the header is sent
 
 The links of every template rendered while WordPress builds the page are sent in one `Link` header, once the page output is complete. This relies on the template enhancement output buffer added in WordPress 6.9: WordPress holds the output of the theme template until it ends, then fires the `wp_finalized_template_enhancement_output_buffer` action, while headers can still be sent.

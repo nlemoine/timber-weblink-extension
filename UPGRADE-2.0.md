@@ -39,6 +39,10 @@ remove_action('wp_finalized_template_enhancement_output_buffer', 'n5s\TimberWebL
 
 Timber creates a Twig environment for each compiled template. 1.x added a new extension to each of them, and each extension sent its own `Link` header. 2.0 adds the same extension to every environment and sends all the links in one `Link` header. A link added several times with the same relation and attributes is sent once.
 
+## Empty URIs
+
+1.x sent an empty link, `<>`, when a template passed `false` or an empty string, for example the result of a WordPress function that found nothing. 2.0 throws an error instead, as both versions do for `null`. Check the value before passing it to a function.
+
 ## Using the extension outside Timber
 
 `new WebLinkExtension()` no longer hooks into WordPress, so its links are never sent. To add the functions to your own Twig environment, add the shared extension instead:

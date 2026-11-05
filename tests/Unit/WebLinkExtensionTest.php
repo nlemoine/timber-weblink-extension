@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Link\LinkInterface;
 use Symfony\Component\WebLink\HttpHeaderSerializer;
 use Twig\Environment;
+use Twig\Error\RuntimeError;
 use Twig\Loader\ArrayLoader;
 
 final class WebLinkExtensionTest extends TestCase
@@ -82,18 +83,50 @@ final class WebLinkExtensionTest extends TestCase
         );
     }
 
+    /**
+     * @return iterable<string, array{mixed, class-string<\Throwable>}>
+     */
+    public static function emptyUris(): iterable
+    {
+        yield 'empty string' => ['', \InvalidArgumentException::class];
+        // Many WordPress functions return false, which Twig passes as an empty string.
+        yield 'false' => [false, \InvalidArgumentException::class];
+        yield 'null' => [null, \TypeError::class];
+    }
+
+    /**
+     * @param class-string<\Throwable> $exception
+     */
+    #[DataProvider('emptyUris')]
+    public function testAnEmptyUriThrows(mixed $uri, string $exception): void
+    {
+        try {
+            $this->render('{{ preload(uri) }}', ['uri' => $uri]);
+        } catch (RuntimeError $error) {
+            $this->assertInstanceOf($exception, $error->getPrevious());
+            $this->assertSame([], $this->extension->getLinks());
+
+            return;
+        }
+
+        $this->fail('The empty URI did not throw.');
+    }
+
     public function testNoLinks(): void
     {
         $this->assertSame([], $this->extension->getLinks());
         $this->assertNull($this->header());
     }
 
-    private function render(string $template): string
+    /**
+     * @param array<string, mixed> $context
+     */
+    private function render(string $template, array $context = []): string
     {
         $twig = new Environment(new ArrayLoader(['template' => $template]));
         $twig->addExtension($this->extension);
 
-        return $twig->render('template');
+        return $twig->render('template', $context);
     }
 
     private function header(): ?string
