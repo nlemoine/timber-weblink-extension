@@ -48,6 +48,11 @@ if ($coverageFile !== null) {
 // Whatever the active theme, render the template of the test.
 Hook::addFilter('template_include', static fn (): string => __DIR__ . '/' . \basename((string) ($_GET['template'] ?? '')) . '.php');
 
+// Turn off the template enhancement output buffer, as a site can. Classic themes turn it on at priority 0.
+if (($_GET['output_buffer'] ?? null) === 'off') {
+    Hook::addFilter('wp_should_output_buffer_template_for_enhancement', static fn (): bool => false, \PHP_INT_MAX);
+}
+
 require "{$rootDir}/tmp/wordpress/wp-tests-config.php";
 require ABSPATH . 'wp-settings.php';
 \wp();

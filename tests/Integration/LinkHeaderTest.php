@@ -47,6 +47,15 @@ final class LinkHeaderTest extends TestCase
         $this->assertSame([], $this->linkHeaders($response));
     }
 
+    public function testNoLinkHeaderWhenTheSiteTurnsOffTheBuffer(): void
+    {
+        $response = $this->request('classic', ['output_buffer' => 'off']);
+
+        $this->assertSame(200, $response->getStatusCode(), $response->getContent());
+        $this->assertStringContainsString('href="/app.css"', $response->getContent());
+        $this->assertSame([], $this->linkHeaders($response));
+    }
+
     /**
      * The Link headers, without the one WordPress sends for the REST API.
      *
@@ -60,7 +69,10 @@ final class LinkHeaderTest extends TestCase
         ));
     }
 
-    private function request(string $template): Response
+    /**
+     * @param array<string, string> $query
+     */
+    private function request(string $template, array $query = []): Response
     {
         $rootDir = \dirname(__DIR__, 2);
         $database = "{$rootDir}/tmp/http-cli/database";
@@ -79,7 +91,7 @@ final class LinkHeaderTest extends TestCase
 
         // Run from the root directory, where PCOV finds src/ when pcov.directory is not set.
         $response = (new Client($rootDir, 'tests/fixtures/front/index.php'))
-            ->request('GET', "http://example.org/?template={$template}", $options);
+            ->request('GET', 'http://example.org/?' . \http_build_query(['template' => $template] + $query), $options);
 
         if ($coverage->isActive() && \is_file($coverageFile)) {
             // As PHPUnit merges the coverage of the tests it runs in a separate process.
