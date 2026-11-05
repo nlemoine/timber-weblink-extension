@@ -37,7 +37,7 @@ remove_action('wp_finalized_template_enhancement_output_buffer', 'n5s\TimberWebL
 
 ## One Link header per request
 
-Timber creates a Twig environment for each compiled template. 1.x added a new extension to each of them, and each extension sent its own `Link` header. 2.0 adds the same extension to every environment and sends all the links in one `Link` header.
+Timber creates a Twig environment for each compiled template. 1.x added a new extension to each of them, and each extension sent its own `Link` header. 2.0 adds the same extension to every environment and sends all the links in one `Link` header. A link added several times with the same relation and attributes is sent once.
 
 ## Using the extension outside Timber
 

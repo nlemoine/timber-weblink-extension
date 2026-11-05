@@ -71,6 +71,17 @@ final class WebLinkExtensionTest extends TestCase
         );
     }
 
+    public function testIdenticalLinksAreAddedOnce(): void
+    {
+        $this->render("{% for i in 1..3 %}{{ preload('/font.woff2', {as: 'font'}) }}{% endfor %}");
+        $this->render("{{ preload('/font.woff2', {as: 'font'}) }}{{ preload('/font.woff2') }}{{ prefetch('/font.woff2') }}");
+
+        $this->assertSame(
+            '</font.woff2>; rel="preload"; as="font",</font.woff2>; rel="preload",</font.woff2>; rel="prefetch"',
+            $this->header()
+        );
+    }
+
     public function testNoLinks(): void
     {
         $this->assertSame([], $this->extension->getLinks());

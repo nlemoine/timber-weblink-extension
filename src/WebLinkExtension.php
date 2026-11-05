@@ -55,7 +55,10 @@ final class WebLinkExtension extends AbstractExtension implements LinkProviderIn
             $link = $link->withAttribute($attribute, $value);
         }
 
-        $this->linkProvider = $this->linkProvider->withLink($link);
+        // A template can be rendered several times in a page, for example in a loop: send each link once.
+        if (!$this->hasLink($link)) {
+            $this->linkProvider = $this->linkProvider->withLink($link);
+        }
 
         return $uri;
     }
@@ -134,5 +137,20 @@ final class WebLinkExtension extends AbstractExtension implements LinkProviderIn
     public function getLinksByRel(string $rel): array
     {
         return $this->linkProvider->getLinksByRel($rel);
+    }
+
+    private function hasLink(LinkInterface $link): bool
+    {
+        foreach ($this->linkProvider->getLinks() as $existing) {
+            if (
+                $existing->getHref() === $link->getHref()
+                && $existing->getRels() === $link->getRels()
+                && $existing->getAttributes() === $link->getAttributes()
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
