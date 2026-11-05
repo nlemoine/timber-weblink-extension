@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace n5s\TimberWebLink\Tests\Integration;
 
 use Mantle\Testkit\TestCase;
+use n5s\TimberWebLink\WebLinkExtension;
 use Psr\Link\LinkInterface;
 use Timber\Timber;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
+use function n5s\TimberWebLink\add_weblink_extension;
 use function n5s\TimberWebLink\get_extension;
 
 final class TimberTest extends TestCase
@@ -39,5 +43,15 @@ final class TimberTest extends TestCase
         );
         $this->assertContains('/first.css', $hrefs);
         $this->assertContains('/second.js', $hrefs);
+    }
+
+    public function testTheExtensionIsAddedOnceToAnEnvironment(): void
+    {
+        $twig = new Environment(new ArrayLoader());
+        // For example when a theme also adds the shared extension itself.
+        $twig->addExtension(get_extension());
+
+        $this->assertSame($twig, add_weblink_extension($twig));
+        $this->assertSame(get_extension(), $twig->getExtension(WebLinkExtension::class));
     }
 }

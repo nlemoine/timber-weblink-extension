@@ -26,7 +26,10 @@ function get_extension(): WebLinkExtension
  */
 function add_weblink_extension(Environment $twig): Environment
 {
-    $twig->addExtension(get_extension());
+    // Twig throws if the same extension is added twice to an environment.
+    if (!$twig->hasExtension(WebLinkExtension::class)) {
+        $twig->addExtension(get_extension());
+    }
 
     return $twig;
 }
