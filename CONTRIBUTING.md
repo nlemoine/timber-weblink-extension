@@ -25,7 +25,7 @@ Tests use [Mantle Testkit](https://mantle.alley.com/docs/testing) and run agains
 
 The test bootstrap loads Composer's autoloader before WordPress, as Bedrock does, so the integration tests also check that the hooks are registered early.
 
-PHP does not record headers on the command line, so `LinkHeaderTest` makes front-end requests in a separate PHP process with [n5s/http-cli](https://github.com/nlemoine/http-cli), which does. The front controller in `tests/fixtures/front` loads the WordPress installed by Mantle on a copy of its database, and renders the template named in the request.
+PHP does not record headers on the command line, so `LinkHeaderTest` makes front-end requests in a separate PHP process with [n5s/http-cli](https://github.com/nlemoine/http-cli), which does. The front controller in `tests/fixtures/front` loads the WordPress installed by Mantle on a copy of its database, and renders the template named in the request. When PHPUnit collects code coverage with PCOV, the front controller collects it in that process too, and the test merges it into PHPUnit's coverage.
 
 ```bash
 composer test
