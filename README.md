@@ -1,7 +1,7 @@
 # Timber WebLink Extension
 
 [![Latest Version](https://img.shields.io/packagist/v/n5s/timber-weblink-extension.svg?style=flat-square)](https://github.com/nlemoine/timber-weblink-extension/releases)
-[![Packagist](https://img.shields.io/packagist/dt/n5s/timber-weblink-extension.svg?style=flat-square)](https://packagist.org/packages/n5s/timber-weblink-extension)
+[![Packagist](https://img.shields.io/packagist/dt/n5s/timber-weblink-extension.svg?style=flat-square)](https://packagist.org/packages/n5s/timber-weblink-extension/stats)
 [![Coverage](https://img.shields.io/codecov/c/github/nlemoine/timber-weblink-extension?style=flat-square)](https://codecov.io/gh/nlemoine/timber-weblink-extension)
 
 Brings the [Symfony WebLink](https://symfony.com/doc/current/web_link.html) Twig functions to [Timber](https://timber.github.io/docs/v2/).
