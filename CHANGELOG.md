@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.0.0](https://github.com/nlemoine/timber-weblink-extension/compare/1.0.0...2.0.0) (2026-11-05)
+## [2.0.0](https://github.com/nlemoine/timber-weblink-extension/compare/1.0...2.0.0) (2026-11-05)
 
 
 ### ⚠ BREAKING CHANGES
