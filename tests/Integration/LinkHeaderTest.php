@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace n5s\TimberWebLink\Tests\Integration;
 
 use n5s\HttpCli\Client;
+use n5s\HttpCli\RequestOptions;
 use n5s\HttpCli\Response;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Runner\CodeCoverage;
 
 /**
  * Front-end requests in a separate PHP process, where n5s/http-cli records the headers.
@@ -69,6 +71,23 @@ final class LinkHeaderTest extends TestCase
         }
         \copy("{$rootDir}/tmp/wordpress/wp-content/database/.ht.sqlite", "{$database}/.ht.sqlite");
 
-        return (new Client(__DIR__ . '/../fixtures/front'))->request('GET', "http://example.org/?template={$template}");
+        $coverage = CodeCoverage::instance();
+        $coverageFile = "{$rootDir}/tmp/http-cli/coverage";
+        $options = $coverage->isActive()
+            ? RequestOptions::create()->header('X-Code-Coverage', $coverageFile)->build()
+            : null;
+
+        // Run from the root directory, where PCOV finds src/ when pcov.directory is not set.
+        $response = (new Client($rootDir, 'tests/fixtures/front/index.php'))
+            ->request('GET', "http://example.org/?template={$template}", $options);
+
+        if ($coverage->isActive() && \is_file($coverageFile)) {
+            // As PHPUnit merges the coverage of the tests it runs in a separate process.
+            $coverage->codeCoverage()->merge(\unserialize((string) \file_get_contents($coverageFile)));
+            // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink -- Test cleanup, as for mkdir() above.
+            \unlink($coverageFile);
+        }
+
+        return $response;
     }
 }
