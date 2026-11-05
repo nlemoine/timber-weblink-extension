@@ -47,9 +47,16 @@ final class WebLinkExtension extends AbstractExtension implements LinkProviderIn
      * @param Attributes $attributes The attributes of this link (e.g. `{as: 'style'}`, `{crossorigin: 'use-credentials'}`).
      *
      * @return string The URI, unchanged.
+     *
+     * @throws \InvalidArgumentException When the URI is empty.
      */
     public function link(string $uri, string $rel, array $attributes = []): string
     {
+        // Twig passes false, which many WordPress functions return, as an empty string.
+        if ($uri === '') {
+            throw new \InvalidArgumentException('The URI of a link must not be empty.');
+        }
+
         $link = new Link($rel, $uri);
         foreach ($attributes as $attribute => $value) {
             $link = $link->withAttribute($attribute, $value);
