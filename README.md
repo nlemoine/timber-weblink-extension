@@ -53,11 +53,15 @@ An empty or `null` URI throws an error. Many WordPress functions return `false` 
 {% endif %}
 ```
 
+URIs are written in the header as they are: do not pass values that come from the request, such as query parameters.
+
 ### When the header is sent
 
 The links of every template rendered while WordPress builds the page are sent in one `Link` header, once the page output is complete. This relies on the template enhancement output buffer added in WordPress 6.9: WordPress holds the output of the theme template until it ends, then fires the `wp_finalized_template_enhancement_output_buffer` action, while headers can still be sent.
 
 On older WordPress versions, no header is sent. The buffer only covers front-end templates loaded by WordPress, not admin pages, REST or Ajax requests, and it is not started if your site turns it off with the `wp_should_output_buffer_template_for_enhancement` filter.
+
+Links are added while templates render. A template that Timber serves from its cache, with the `$expires` argument of `Timber::render()` or `Timber::compile()`, does not render, so it adds no links.
 
 To send the header at another time, remove the action and call the function yourself:
 
