@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/nlemoine/timber-weblink-extension/compare/2.0.0...2.0.1) (2026-11-26)
+
+
+### Miscellaneous Chores
+
+* add GitHub Sponsors to composer funding ([4672e59](https://github.com/nlemoine/timber-weblink-extension/commit/4672e595fb0fde60b3d1168395817554918a8c97))
+* remove funding file, use account default ([653aa8e](https://github.com/nlemoine/timber-weblink-extension/commit/653aa8ec93646c0e3ccdbaa9cd956b37b545092b))
+
 ## [2.0.0](https://github.com/nlemoine/timber-weblink-extension/compare/1.0...2.0.0) (2026-11-05)
 
 
